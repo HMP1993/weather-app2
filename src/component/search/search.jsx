@@ -1,6 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { AsyncPaginate } from "react-select-async-paginate";
-import { GEO_API_URL, geoApiOptions } from "../../../api";
+import { geoApiOptions, GEO_API_URL } from "../../api";
 
 const Search = ({ onSearchChange }) => {
   const [search, setSearch] = useState(null);
@@ -16,17 +16,18 @@ const Search = ({ onSearchChange }) => {
           options: response.data.map((city) => {
             return {
               value: `${city.latitude} ${city.longitude}`,
-              lable: `${city.name} ${city.countryCode}`,
+              label: `${city.name}, ${city.countryCode}`,
             };
           }),
         };
-      })
-      .catch((err) => console.error(err));
+      });
   };
+
   const handleOnChange = (searchData) => {
     setSearch(searchData);
     onSearchChange(searchData);
   };
+
   return (
     <AsyncPaginate
       placeholder="Search for city"
